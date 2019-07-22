@@ -26,7 +26,7 @@
 #OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 #IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-enable_kona_tracing_events()
+enable_tracing_events()
 {
     # timer
     echo 1 > /sys/kernel/debug/tracing/events/timer/timer_expire_entry/enable
@@ -85,15 +85,11 @@ enable_kona_tracing_events()
     echo 4 2 > /sys/bus/coresight/devices/coresight-cti-swao_cti0/map_trigin
     echo 4 2 > /sys/bus/coresight/devices/coresight-cti-swao_cti0/map_trigout
 
-    #memory pressure events/oom
-    echo 1 > /sys/kernel/debug/tracing/events/psi/psi_event/enable
-    echo 1 > /sys/kernel/debug/tracing/events/psi/psi_window_vmstat/enable
-
     echo 1 > /sys/kernel/debug/tracing/tracing_on
 }
 
 # function to enable ftrace events
-enable_kona_ftrace_event_tracing()
+enable_ftrace_event_tracing()
 {
     # bail out if its perf config
     if [ ! -d /sys/module/msm_rtb ]
@@ -107,7 +103,7 @@ enable_kona_ftrace_event_tracing()
         return
     fi
 
-    enable_kona_tracing_events
+    enable_tracing_events
 }
 
 # function to enable ftrace event transfer to CoreSight STM
@@ -134,7 +130,7 @@ enable_stm_events_kona()
     echo 1 > /sys/bus/coresight/devices/coresight-stm/$srcenable
     echo 1 > /sys/kernel/debug/tracing/tracing_on
     echo 0 > /sys/bus/coresight/devices/coresight-stm/hwevent_enable
-    enable_kona_tracing_events
+    enable_tracing_events
 }
 
 config_kona_dcc_ddr()
@@ -1253,7 +1249,7 @@ enable_kona_debug()
     echo "Enabling STM events on kona."
     enable_stm_events_kona
     if [ "$ftrace_disable" != "Yes" ]; then
-        enable_kona_ftrace_event_tracing
+        enable_ftrace_event_tracing
     fi
     enable_kona_dcc_config
     enable_kona_stm_hw_events
