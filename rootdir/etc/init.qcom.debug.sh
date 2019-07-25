@@ -33,6 +33,8 @@ source $HERE/init.qcom.debug-sdm710.sh
 source $HERE/init.qti.debug-msmnile.sh
 source $HERE/init.qti.debug-talos.sh
 source $HERE/init.qti.debug-kona.sh
+source $HERE/init.qti.debug-lito.sh
+source $HERE/init.qti.debug-trinket.sh
 
 enable_tracing_events()
 {
@@ -2545,6 +2547,16 @@ case "$coresight_config" in
             "kona")
                 echo "Enabling DCC/STM/Debug events for kona"
                 enable_kona_debug
+                setprop ro.dbg.coresight.stm_cfg_done 1
+            ;;
+            "lito")
+                echo "Enabling DCC/STM/Debug events for lito"
+                enable_lito_debug
+                setprop ro.dbg.coresight.stm_cfg_done 1
+            ;;
+            "trinket")
+                echo "Enabling DCC/STM/Debug events for trinket"
+                enable_trinket_debug
                 setprop ro.dbg.coresight.stm_cfg_done 1
             ;;
             *)
