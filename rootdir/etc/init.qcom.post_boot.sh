@@ -543,6 +543,10 @@ else
     echo 0 > /sys/module/vmpressure/parameters/allocstall_threshold
     echo 100 > /proc/sys/vm/swappiness
 
+    # Disable wsf for all targets beacause we are using efk.
+    # wsf Range : 1..1000 So set to bare minimum value 1.
+    echo 1 > /proc/sys/vm/watermark_scale_factor
+
     configure_zram_parameters
 
     configure_read_ahead_kb_values
@@ -3445,6 +3449,7 @@ case "$target" in
 
         for npubw in $device/*npu*-npu-ddr-bw/devfreq/*npu*-npu-ddr-bw
         do
+            echo 1 > /sys/devices/virtual/npu/msm_npu/pwr
             echo "bw_hwmon" > $npubw/governor
             echo 40 > $npubw/polling_interval
             echo "1144 1720 2086 2929 3879 5931 6881 7980" > $npubw/bw_hwmon/mbps_zones
@@ -3456,6 +3461,7 @@ case "$target" in
             echo 0 > $npubw/bw_hwmon/guard_band_mbps
             echo 250 > $npubw/bw_hwmon/up_scale
             echo 0 > $npubw/bw_hwmon/idle_mbps
+            echo 0 > /sys/devices/virtual/npu/msm_npu/pwr
         done
 
         #Enable mem_latency governor for L3, LLCC, and DDR scaling
@@ -3639,10 +3645,8 @@ case "$target" in
     # Turn off scheduler boost at the end
     echo 0 > /proc/sys/kernel/sched_boost
 
-    # Disable core_ctl until sleep is enabled.
-    echo 6 > /sys/devices/system/cpu/cpu0/core_ctl/min_cpus
-    # Turn off sleep modes.. To be changed after BU stabilty verified
-    echo 1 > /sys/module/lpm_levels/parameters/sleep_disabled
+    # Turn on sleep modes
+    echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
   ;;
 esac
 
