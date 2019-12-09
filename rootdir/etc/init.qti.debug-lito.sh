@@ -315,6 +315,28 @@ config_lito_dcc_gemnoc()
     echo 0x969813c > $DCC_PATH/config
     #GemNOC for lito end
 }
+
+config_lito_dcc_gpu()
+{
+    #GCC
+    echo 0x171004 > $DCC_PATH/config
+    echo 0x171154 > $DCC_PATH/config
+    echo 0x17100C > $DCC_PATH/config
+    echo 0x171018 > $DCC_PATH/config
+
+    #GPUCC
+    echo 0x3D9106C > $DCC_PATH/config
+    echo 0x3D9100C > $DCC_PATH/config
+    echo 0x3D91010 > $DCC_PATH/config
+    echo 0x3D91014 > $DCC_PATH/config
+    echo 0x3D91070 > $DCC_PATH/config
+    echo 0x3D91074 > $DCC_PATH/config
+    echo 0x3D91098 > $DCC_PATH/config
+    echo 0x3D91004 > $DCC_PATH/config
+    echo 0x3D9109C > $DCC_PATH/config
+    echo 0x3D91078 > $DCC_PATH/config
+    echo 0x3D91054 > $DCC_PATH/config
+}
 config_lito_dcc_lpm()
 {
     #PCU Register
@@ -384,7 +406,10 @@ config_lito_dcc_osm()
     echo 0x18321710 > $DCC_PATH/config
     echo 0x1832176c > $DCC_PATH/config
     echo 0x18321818 > $DCC_PATH/config
+    echo 0x1832181C > $DCC_PATH/config
+    echo 0x18321824 > $DCC_PATH/config
     echo 0x18321920 > $DCC_PATH/config
+    echo 0x18322C14 > $DCC_PATH/config
     echo 0x18322c18 > $DCC_PATH/config
     echo 0x1832302c > $DCC_PATH/config
     echo 0x18323044 > $DCC_PATH/config
@@ -392,6 +417,8 @@ config_lito_dcc_osm()
     echo 0x18323710 > $DCC_PATH/config
     echo 0x1832376c > $DCC_PATH/config
     echo 0x18323818 > $DCC_PATH/config
+    echo 0x1832381C > $DCC_PATH/config
+    echo 0x18323824 > $DCC_PATH/config
     echo 0x18323920 > $DCC_PATH/config
     echo 0x18324c18 > $DCC_PATH/config
     echo 0x1832582c > $DCC_PATH/config
@@ -400,7 +427,10 @@ config_lito_dcc_osm()
     echo 0x18325f10 > $DCC_PATH/config
     echo 0x18325f6c > $DCC_PATH/config
     echo 0x18326018 > $DCC_PATH/config
+    echo 0x1832601C > $DCC_PATH/config
+    echo 0x18326024 > $DCC_PATH/config
     echo 0x18326120 > $DCC_PATH/config
+    echo 0x18327414 > $DCC_PATH/config
     echo 0x18327418 > $DCC_PATH/config
     echo 0x1832782c > $DCC_PATH/config
     echo 0x18327844 > $DCC_PATH/config
@@ -408,7 +438,10 @@ config_lito_dcc_osm()
     echo 0x18327f10 > $DCC_PATH/config
     echo 0x18327f6c > $DCC_PATH/config
     echo 0x18328018 > $DCC_PATH/config
+    echo 0x1832801C > $DCC_PATH/config
+    echo 0x18328024 > $DCC_PATH/config
     echo 0x18328120 > $DCC_PATH/config
+    echo 0x18329414 > $DCC_PATH/config
     echo 0x18329418 > $DCC_PATH/config
 }
 
@@ -454,6 +487,7 @@ config_lito_dcc_core()
     echo 0x18286000 4 > $DCC_PATH/config
 
     #Gold PLL
+    echo 0x18280084 > $DCC_PATH/config
     echo 0x18282000 4 > $DCC_PATH/config
     echo 0x18282028 1 > $DCC_PATH/config
     echo 0x18282038 1 > $DCC_PATH/config
@@ -2851,6 +2885,7 @@ enable_lito_dcc_config()
     config_lito_dcc_osm
     config_lito_dcc_gemnoc
     config_lito_dcc_noc
+    config_lito_dcc_gpu
     config_lito_dcc_gcc
     config_lito_dcc_pimem
     config_lito_dcc_misc
