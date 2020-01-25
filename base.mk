@@ -466,6 +466,7 @@ LIBCAMERA += libmmjpeg_interface
 LIBCAMERA += libmmlib2d_interface
 LIBCAMERA += libqomx_core
 LIBCAMERA += mm-qcamera-app
+LIBCAMERA += cam-hal3-test
 LIBCAMERA += camera_test
 LIBCAMERA += org.codeaurora.camera
 
@@ -1049,6 +1050,7 @@ PRODUCT_PACKAGES += $(IPACM)
 PRODUCT_PACKAGES += $(FSTMAN)
 PRODUCT_PACKAGES += $(FD_LEAK)
 PRODUCT_PACKAGES += $(IMS_EXT)
+PRODUCT_PACKAGES += libseccamenc
 # Temp workarround for b/36603742
 PRODUCT_PACKAGES += android.hidl.manager@1.0-java
 
