@@ -371,7 +371,9 @@ function configure_zram_parameters() {
 
     RamSizeGB=`echo "($MemTotal / 1048576 ) + 1" | bc`
     zRamSizeBytes=`echo "$RamSizeGB * 1024 * 1024 * 1024 / 2" | bc`
-    if [ $zRamSizeBytes -gt 4294967296 ]; then
+    zRamSizeMB=`echo "$RamSizeGB * 1024 / 2" | bc`
+    # use MB avoid 32 bit overflow
+    if [ $zRamSizeMB -gt 4096 ]; then
         zRamSizeBytes=4294967296
     fi
 
@@ -3737,7 +3739,7 @@ case "$target" in
         fi
 
         case "$soc_id" in
-                 "417" )
+                 "417" | "420" | "444" | "445" )
 
             # Core control is temporarily disabled till bring up
             echo 0 > /sys/devices/system/cpu/cpu0/core_ctl/enable
@@ -5128,7 +5130,7 @@ case "$target" in
 	    for memlat in $device/*qcom,devfreq-l3/*cpu*-lat/devfreq/*cpu*-lat
 	    do
 		echo "mem_latency" > $memlat/governor
-		echo 10 > $memlat/polling_interval
+		echo 8 > $memlat/polling_interval
 		echo 400 > $memlat/mem_latency/ratio_ceil
 	    done
 
@@ -5142,7 +5144,7 @@ case "$target" in
 	    for memlat in $device/*cpu*-lat/devfreq/*cpu*-lat
 	    do
 		echo "mem_latency" > $memlat/governor
-		echo 10 > $memlat/polling_interval
+		echo 8 > $memlat/polling_interval
 		echo 400 > $memlat/mem_latency/ratio_ceil
 	    done
 
@@ -5150,7 +5152,7 @@ case "$target" in
 	    for latfloor in $device/*cpu-ddr-latfloor*/devfreq/*cpu-ddr-latfloor*
 	    do
 		echo "compute" > $latfloor/governor
-		echo 10 > $latfloor/polling_interval
+		echo 8 > $latfloor/polling_interval
 	    done
 
 	    #Gold L3 ratio ceil
