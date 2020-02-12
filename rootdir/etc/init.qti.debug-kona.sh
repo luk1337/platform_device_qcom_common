@@ -138,13 +138,6 @@ enable_stm_events_kona()
 }
 enable_kona_lpm_with_dcvs_tracing()
 {
-    echo "Configure SW EVENTS Settings"
-    echo 1 > /sys/kernel/debug/tracing/events/msm_low_power/cpu_idle_enter/enable
-    echo 1 > /sys/kernel/debug/tracing/events/msm_low_power/cpu_idle_exit/enable
-    echo 1 > /sys/kernel/debug/tracing/events/msm_low_power/cluster_enter/enable
-    echo 1 > /sys/kernel/debug/tracing/events/msm_low_power/cluster_exit/enable
-    echo 1 >/sys/kernel/debug/tracing/tracing_on
-
     echo "Configure LPM HW Events at Top TPDM"
 
     echo 1 > /sys/bus/coresight/devices/coresight-tpdm-apss/reset
@@ -877,6 +870,8 @@ config_kona_dcc_lpm_pcu()
     echo 0x18080104 1 > $DCC_PATH/config
     echo 0x1808011C 1 > $DCC_PATH/config
     echo 0x18080128 1 > $DCC_PATH/config
+    echo 0x18080168 1 > $DCC_PATH/config
+    echo 0x18080198 1 > $DCC_PATH/config
 }
 config_kona_dcc_lpm()
 {

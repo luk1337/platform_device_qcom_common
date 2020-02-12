@@ -142,6 +142,7 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/sec_nvm_*            0660   system     system
 /dev/cryptoapp            0660   system     system
 /dev/spdaemon_ssr         0660   system     system
+/dev/spu_hal_ssr          0660   system     system
 /dev/iuicc                0660   system     system
 /dev/iuicc0               0660   system     system
 /dev/iuicc1               0660   system     system
@@ -174,6 +175,7 @@ firmware_directories /vendor/firmware_mnt/image/
 /sys/devices/soc/a000000.qcom,wcnss-wlan/net/wlan0/queues/rx-* rps_cpus           0660   system     system
 /sys/devices/soc/a000000.qcom,wcnss-wlan/net/p2p0/queues/rx-* rps_cpus            0660   system     system
 /dev/spidev0.0            0660   system     audio
+/dev/i2c-7                0660   system     audio
 /dev/msm_camera/*         0660   system     camera
 /dev/gemini/              0660   system     camera
 /dev/mercury0             0660   system     camera
