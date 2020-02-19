@@ -397,6 +397,7 @@ esac
 case "$product" in
         "msmnile_gvmq")
          setprop vendor.display.lcd_density 160
+         setprop persist.graphics.vulkan.disable true
          ;;
         *)
         ;;
