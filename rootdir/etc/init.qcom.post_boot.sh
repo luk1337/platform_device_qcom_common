@@ -4636,6 +4636,14 @@ case "$target" in
 esac
 
 product=`getprop ro.build.product`
+
+case "$product" in
+       "msmnile_gvmq")
+        stop adbd
+        start adbd
+      ;;
+esac
+
 case "$product" in
 	"msmnile_au")
 	#Setting the min and max supported frequencies
