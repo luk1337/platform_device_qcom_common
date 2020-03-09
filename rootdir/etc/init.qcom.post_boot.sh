@@ -1221,9 +1221,17 @@ case "$target" in
 		echo 157286400 > /sys/block/zram0/disksize
 	else
 		echo 128 > /sys/block/mmcblk0/queue/read_ahead_kb
-		echo 8192 > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
+        if [ "$MemTotal" -le "524288" ]; then #512Mb target
+            echo 32768 > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
+            echo 268435456 > /sys/block/zram0/disksize
+        elif  [ "$MemTotal" -le "786432" ] && [ $MemTotal -gt "524288" ]; then #768MB target
+            echo 36864 > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
+            echo 402653184 > /sys/block/zram0/disksize
+        else #1GB target
+            echo 53059 > /sys/module/lowmemorykiller/parameters/vmpressure_file_min
+            echo 536870912 > /sys/block/zram0/disksize
+        fi
 		echo 0 > /sys/module/vmpressure/parameters/allocstall_threshold
-		echo 268435456 > /sys/block/zram0/disksize
 	fi
 	#Disable ALMK due to memory leakage in b2g process on apps getting killed by ALMK.
 	echo 0 > /sys/module/lowmemorykiller/parameters/enable_adaptive_lmk
@@ -1260,23 +1268,39 @@ case "$target" in
 		echo 200000000 > /sys/class/kgsl/kgsl-3d0/devfreq/min_freq
 		echo performance > /sys/class/kgsl/kgsl-3d0/devfreq/governor
 	else
-		echo "interactive" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-		echo 800000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
-	fi
+        #if the kernel version >=4.9,use the schedutil governor
+        KernelVersionStr=`cat /proc/sys/kernel/osrelease`
+        KernelVersionS=${KernelVersionStr:2:2}
+        KernelVersionA=${KernelVersionStr:0:1}
+        KernelVersionB=${KernelVersionS%.*}
+        if [ $KernelVersionA -ge 4 ] && [ $KernelVersionB -ge 9 ]; then
+            echo "schedutil" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+            echo 0 > /sys/devices/system/cpu/cpufreq/schedutil/rate_limit_us
+            echo 800000 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_freq
+            echo -10 > /sys/devices/system/cpu/cpu0/sched_load_boost
+            echo -10 > /sys/devices/system/cpu/cpu1/sched_load_boost
+            echo -10 > /sys/devices/system/cpu/cpu2/sched_load_boost
+            echo -10 > /sys/devices/system/cpu/cpu3/sched_load_boost
+            echo 80 > /sys/devices/system/cpu/cpufreq/schedutil/hispeed_load
+        else
+            echo "interactive" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+            echo 800000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+            echo "30000 1094400:50000" > /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
+            echo 90 > /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
+            echo 30000 > /sys/devices/system/cpu/cpufreq/interactive/timer_rate
+            echo 998400 > /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
+            echo 0 > /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
+            echo "1 800000:85 998400:90 1094400:80" > /sys/devices/system/cpu/cpufreq/interactive/target_loads
+            echo 50000 > /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
+            echo 50000 > /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor
+        fi
+    fi
 
         # enable thermal core_control now
 	if [ "$ProductName" != "msm8909w" ]; then
 		echo 1 > /sys/module/msm_thermal/core_control/enabled
 	fi
 
-        echo "30000 1094400:50000" > /sys/devices/system/cpu/cpufreq/interactive/above_hispeed_delay
-        echo 90 > /sys/devices/system/cpu/cpufreq/interactive/go_hispeed_load
-        echo 30000 > /sys/devices/system/cpu/cpufreq/interactive/timer_rate
-        echo 998400 > /sys/devices/system/cpu/cpufreq/interactive/hispeed_freq
-        echo 0 > /sys/devices/system/cpu/cpufreq/interactive/io_is_busy
-        echo "1 800000:85 998400:90 1094400:80" > /sys/devices/system/cpu/cpufreq/interactive/target_loads
-        echo 50000 > /sys/devices/system/cpu/cpufreq/interactive/min_sample_time
-        echo 50000 > /sys/devices/system/cpu/cpufreq/interactive/sampling_down_factor
 
 	if [ "$ProductName" == "msm8909w" ] || [ "$ProductName" == "msm8909_512" ]; then
 		# Post boot, have cpu0 and cpu1 online. Make all other cores go offline
@@ -1304,28 +1328,28 @@ case "$target" in
 	fi
 
         # Apply governor settings for 8909
-	for devfreq_gov in /sys/class/devfreq/qcom,cpubw*/governor
+	for devfreq_gov in /sys/class/devfreq/*qcom,cpubw*/governor
 	do
 		echo "bw_hwmon" > $devfreq_gov
-		for cpu_bimc_bw_step in /sys/class/devfreq/qcom,cpubw*/bw_hwmon/bw_step
+		for cpu_bimc_bw_step in /sys/class/devfreq/*qcom,cpubw*/bw_hwmon/bw_step
 		do
 			echo 60 > $cpu_bimc_bw_step
 		done
-		for cpu_guard_band_mbps in /sys/class/devfreq/qcom,cpubw*/bw_hwmon/guard_band_mbps
+		for cpu_guard_band_mbps in /sys/class/devfreq/*qcom,cpubw*/bw_hwmon/guard_band_mbps
 		do
 			echo 30 > $cpu_guard_band_mbps
 		done
 	done
 
-	for gpu_bimc_io_percent in /sys/class/devfreq/qcom,gpubw*/bw_hwmon/io_percent
+	for gpu_bimc_io_percent in /sys/class/devfreq/*qcom,gpubw*/bw_hwmon/io_percent
 	do
 		echo 40 > $gpu_bimc_io_percent
 	done
-	for gpu_bimc_bw_step in /sys/class/devfreq/qcom,gpubw*/bw_hwmon/bw_step
+	for gpu_bimc_bw_step in /sys/class/devfreq/*qcom,gpubw*/bw_hwmon/bw_step
 	do
 		echo 60 > $gpu_bimc_bw_step
 	done
-	for gpu_bimc_guard_band_mbps in /sys/class/devfreq/qcom,gpubw*/bw_hwmon/guard_band_mbps
+	for gpu_bimc_guard_band_mbps in /sys/class/devfreq/*qcom,gpubw*/bw_hwmon/guard_band_mbps
 	do
 		echo 30 > $gpu_bimc_guard_band_mbps
 	done
