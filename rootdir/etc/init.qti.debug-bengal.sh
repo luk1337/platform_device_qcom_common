@@ -856,7 +856,7 @@ config_bengal_dcc_lpm()
     echo 0xf0b9000 > $DCC_PATH/config
     echo 0xf0b900c > $DCC_PATH/config
     echo 0xf0b9c0c > $DCC_PATH/config
-    echo 0xf0a9c10 > $DCC_PATH/config
+    echo 0xf0b9c10 > $DCC_PATH/config
     echo 0xf0b9c20 > $DCC_PATH/config
 
     #APCLUS0_L2_SAW4
@@ -999,7 +999,7 @@ config_bengal_dcc_noc()
 
     echo 0x1411004 > $DCC_PATH/config
     echo 0x1411028 > $DCC_PATH/config
-    echo 0x141102C > $DCC_PATH/config
+    #echo 0x141102C > $DCC_PATH/config
 
     echo 0x1458004 > $DCC_PATH/config
 
@@ -1102,6 +1102,14 @@ config_bengal_dcc_misc()
     echo 0xF017020 > $DCC_PATH/config
     echo 0x1414008 > $DCC_PATH/config
     echo 0x1414004 > $DCC_PATH/config
+
+    echo 0x5991554 > $DCC_PATH/config
+    echo 0x5991544 > $DCC_PATH/config
+    echo 0x599155C > $DCC_PATH/config
+
+    #MPM_SSCAON_STATUS
+    echo 0x440B00C > $DCC_PATH/config
+    echo 0x440B014 > $DCC_PATH/config
 }
 
 config_modem_rscc()
@@ -1276,7 +1284,7 @@ enable_bengal_dcc_config()
     fi
 
     echo 0 > $DCC_PATH/enable
-    echo 2 > $DCC_PATH/curr_list
+    echo 3 > $DCC_PATH/curr_list
     echo cap > $DCC_PATH/func_type
     echo sram > $DCC_PATH/data_sink
     echo 1 > $DCC_PATH/config_reset
@@ -1295,13 +1303,65 @@ enable_bengal_dcc_config()
 
     #configure sink for LL3 as atb
     echo 1 > /sys/bus/coresight/devices/coresight-tpdm-dcc/enable_source
-    echo 3 > $DCC_PATH/curr_list
+    echo 2 > $DCC_PATH/curr_list
     echo cap > $DCC_PATH/func_type
     echo atb > $DCC_PATH/data_sink
     dcc_async_package
     config_bengal_dcc_gcc_mm
     config_bengal_dcc_gcc
     echo  1 > $DCC_PATH/enable
+}
+
+enable_bengal_smmu_hw_events()
+{
+    echo 1 > /sys/bus/coresight/devices/coresight-tpdm-center/reset
+    #Set HW Event Register "center" startIndex 0x20 endIndex 0x20
+    echo 0x20 0x20 0x1 > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_edge_ctrl_mask
+    #Set HW Event Edge Detection type "center" startIndex 0x20 endIndex 0x20 edgeDetect both
+    echo 0x20 0x20 2 > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_edge_ctrl
+    #Set HW Event Register "center" startIndex 0x21 endIndex 0x21
+    echo 0x21 0x21 0x1 > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_edge_ctrl_mask
+    #Set HW Event Edge Detection type "center" startIndex 0x21 endIndex 0x21 edgeDetect both
+    echo 0x21 0x21 2 > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_edge_ctrl
+    #Set HW Event Register "center" startIndex 0x24 endIndex 0x24
+    echo 0x24 0x24 0x1 > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_edge_ctrl_mask
+    #Set HW Event Edge Detection type "center" startIndex 0x24 endIndex 0x24 edgeDetect both
+    echo 0x24 0x24 2 > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_edge_ctrl
+    #Set HW Event Register "center" startIndex 0x7c endIndex 0x7c
+    echo 0x7c 0x7c 0x1 > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_edge_ctrl_mask
+    #Set HW Event Edge Detection type "center" startIndex 0x7c endIndex 0x7c edgeDetect both
+    echo 0x7c 0x7c 2 > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_edge_ctrl
+    #Set HW Event Register "center" startIndex 0x7d endIndex 0x7d
+    echo 0x7d 0x7d 0x1 > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_edge_ctrl_mask
+    #Set HW Event Edge Detection type "center" startIndex 0x7d endIndex 0x7d edgeDetect both
+    echo 0x7d 0x7d 2 > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_edge_ctrl
+    #Set HW Event Register "center" startIndex 0x7e endIndex 0x7e
+    echo 0x7e 0x7e 0x1 > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_edge_ctrl_mask
+    #Set HW Event Edge Detection type "center" startIndex 0x7e endIndex 0x7e edgeDetect both
+    echo 0x7e 0x7e 2 > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_edge_ctrl
+    #Set HW Event Register "center" startIndex 0x7f endIndex 0x7f
+    echo 0x7f 0x7f 0x1 > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_edge_ctrl_mask
+    #Set HW Event Edge Detection type "center" startIndex 0x7f endIndex 0x7f edgeDetect both
+    echo 0x7f 0x7f 2 > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_edge_ctrl
+    #Set Mux Select Register "center" muxIndex 4 muxInput 0x00010011
+    echo 4 0x00010011  > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_msr
+    #Set Mux Select Register "center" muxIndex 15 muxInput 0x99990000
+    echo 15 0x99990000  > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_msr
+    #Set TPDM Type "center"
+    echo 1 > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_patt_ts
+    echo 1 > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_patt_type
+    echo 0 > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_trig_ts
+    echo 0 0xFFFFFFFF > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_patt_mask
+    echo 1 0xFFFFFFFF > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_patt_mask
+    echo 2 0xFFFFFFFF > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_patt_mask
+    echo 3 0xFFFFFFFF > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_patt_mask
+    echo 4 0xFFFFFFFF > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_patt_mask
+    echo 5 0xFFFFFFFF > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_patt_mask
+    echo 6 0xFFFFFFFF > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_patt_mask
+    echo 7 0xFFFFFFFF > /sys/bus/coresight/devices/coresight-tpdm-center/dsb_patt_mask
+
+    echo 2 > /sys/bus/coresight/devices/coresight-tpdm-center/enable_datasets
+    echo 1 > /sys/bus/coresight/devices/coresight-tpdm-center/enable_source
 }
 
 enable_bengal_stm_hw_events()
@@ -1441,6 +1501,8 @@ enable_bengal_stm_hw_events()
     echo 7 0xFFFFFFFF > /sys/bus/coresight/devices/coresight-tpdm-apss/dsb_patt_mask
     echo 2 > /sys/bus/coresight/devices/coresight-tpdm-apss/enable_datasets
     echo 1 > /sys/bus/coresight/devices/coresight-tpdm-apss/enable_source
+
+    enable_bengal_smmu_hw_events
 }
 
 
@@ -1471,7 +1533,7 @@ enable_bengal_debug()
     echo "Enabling STM events on bengal."
     enable_bengal_stm_events
     echo "Enabling HW  events on bengal."
-    #enable_bengal_stm_hw_events
+    enable_bengal_stm_hw_events
     if [ "$ftrace_disable" != "Yes" ]; then
         enable_bengal_ftrace_event_tracing
     fi
