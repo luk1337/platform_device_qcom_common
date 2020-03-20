@@ -87,6 +87,12 @@ enable_tracing_events_lito()
     echo 1 > /sys/kernel/debug/tracing/events/iommu/map_sg/enable
     echo 1 > /sys/kernel/debug/tracing/events/iommu/unmap/enable
 
+    #enable preemption and irq off traces 500 ms for preemption and 100 ms for irq off
+    echo 500000000 > /proc/sys/kernel/preemptoff_tracing_threshold_ns
+    echo 1 > /sys/kernel/debug/tracing/events/sched/sched_preempt_disable/enable
+    echo 100000000 > /proc/sys/kernel/irqsoff_tracing_threshold_ns
+    echo 1 > /sys/kernel/debug/tracing/events/preemptirq/irqs_disable/enable
+
     echo 1 > /sys/kernel/debug/tracing/tracing_on
 }
 
@@ -1756,6 +1762,14 @@ config_lito_dcc_mss_rsc(){
 }
 
 config_lito_dcc_noc(){
+    echo 0x0010500C > $DCC_PATH/config
+    echo 0x00104144 > $DCC_PATH/config
+    echo 0x00105034 > $DCC_PATH/config
+
+    #Enable clocks for SNOC sense registers
+    echo 0x0010500C 0x1 > $DCC_PATH/config_write
+    echo 0x00104144 0x1 > $DCC_PATH/config_write
+    echo 0x00105034 0x1 > $DCC_PATH/config_write
     #A1NOC
     echo 0x16e0000 > $DCC_PATH/config
     echo 0x16e0004 > $DCC_PATH/config
@@ -2503,6 +2517,7 @@ config_lito_dcc_apps_rsc_pdc()
     echo 0x18220040 > $DCC_PATH/config
     echo 0x182200d0 > $DCC_PATH/config
     echo 0x18230408 > $DCC_PATH/config
+    echo 0x182004B4 > $DCC_PATH/config
 
     #RPMH PDC
     echo 0xb201020 > $DCC_PATH/config
@@ -3223,6 +3238,6 @@ enable_lito_debug()
     fi
     enable_lito_dcc_config
     enable_lito_core_hang_config
-    enable_lito_stm_hw_events
-    enable_lito_audio_pdc_hw_events
+    # enable_lito_stm_hw_events
+    # enable_lito_audio_pdc_hw_events
 }
