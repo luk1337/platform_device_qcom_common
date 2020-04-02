@@ -137,17 +137,43 @@ enable_stm_events_lagoon()
 
 config_lagoon_dcc_ddr()
 {
-    #DDR -DCC starts here.
-    #Start Link list #6
+    #DDR - DCC starts here.
+    #Start Link list #4
     #LLCC
-    echo 0x9220480 1 > $DCC_PATH/config
-    echo 0x9232100 1 > $DCC_PATH/config
-    echo 0x92360b0 1 > $DCC_PATH/config
-    echo 0x9236044 4 > $DCC_PATH/config
-    echo 0x923e030 1 > $DCC_PATH/config
-    echo 0x9241000 1 > $DCC_PATH/config
-    echo 0x9248048 4 > $DCC_PATH/config
-    echo 0x9248058 4 > $DCC_PATH/config
+    echo 0x9220480 > $DCC_PATH/config
+    echo 0x9232100 > $DCC_PATH/config
+    echo 0x92360b0 > $DCC_PATH/config
+    echo 0x9236044 > $DCC_PATH/config
+    echo 0x9236048 > $DCC_PATH/config
+    echo 0x923604C > $DCC_PATH/config
+    echo 0x9236050 > $DCC_PATH/config
+    echo 0x923e030 > $DCC_PATH/config
+    echo 0x9241000 > $DCC_PATH/config
+    echo 0x9248048 > $DCC_PATH/config
+    echo 0x9248058 > $DCC_PATH/config
+    echo 0x924805C > $DCC_PATH/config
+    echo 0x9248060 > $DCC_PATH/config
+    echo 0x9248064 > $DCC_PATH/config
+    echo 0x9222408 > $DCC_PATH/config
+    echo 0x9220344 > $DCC_PATH/config
+    echo 0x9220348 > $DCC_PATH/config
+    echo 0x922358C > $DCC_PATH/config
+    echo 0x9222398 > $DCC_PATH/config
+    echo 0x92223A4 > $DCC_PATH/config
+    echo 0x923201C > $DCC_PATH/config
+    echo 0x9232020 > $DCC_PATH/config
+    echo 0x9232024 > $DCC_PATH/config
+    echo 0x9232028 > $DCC_PATH/config
+    echo 0x923202C > $DCC_PATH/config
+    echo 0x9232050 > $DCC_PATH/config
+    echo 0x9236028 > $DCC_PATH/config
+    echo 0x923602C > $DCC_PATH/config
+    echo 0x9236030 > $DCC_PATH/config
+    echo 0x9236034 > $DCC_PATH/config
+    echo 0x9236038 > $DCC_PATH/config
+    echo 0x9236040 > $DCC_PATH/config
+    echo 0x9236054 > $DCC_PATH/config
+    echo 0x9236060 > $DCC_PATH/config
 
     #CABO
     echo 0x9260400 > $DCC_PATH/config
@@ -176,6 +202,16 @@ config_lagoon_dcc_ddr()
     echo 0x92E04B8 > $DCC_PATH/config
     echo 0x92E5804 > $DCC_PATH/config
     echo 0x92E6418 > $DCC_PATH/config
+    echo 0x92E5B1C > $DCC_PATH/config
+    echo 0x92E6420 > $DCC_PATH/config
+    echo 0x92E04D4 > $DCC_PATH/config
+    echo 0x92604B0 > $DCC_PATH/config
+    echo 0x92E0404 > $DCC_PATH/config
+    echo 0x92E04B0 > $DCC_PATH/config
+    echo 0x92E04D0 > $DCC_PATH/config
+    echo 0x9260404 > $DCC_PATH/config
+    echo 0x9265840 > $DCC_PATH/config
+    echo 0x9265B18 > $DCC_PATH/config
 
     #LLCC Broadcast
     echo 0x9600000 > $DCC_PATH/config
@@ -257,10 +293,19 @@ config_lagoon_dcc_ddr()
     echo 0x90b0298 > $DCC_PATH/config
     echo 0x90b029c > $DCC_PATH/config
     echo 0x90b02a0 > $DCC_PATH/config
+    echo 0x90B0004 > $DCC_PATH/config
+    echo 0x90C012C > $DCC_PATH/config
+    echo 0x90C8040 > $DCC_PATH/config
+    echo 0x9186048 > $DCC_PATH/config
+    echo 0x9186054 > $DCC_PATH/config
+    echo 0x9186164 > $DCC_PATH/config
+    echo 0x9186170 > $DCC_PATH/config
+    echo 0x9186078 > $DCC_PATH/config
+    echo 0x9186264 > $DCC_PATH/config
+    echo 0x9250110 > $DCC_PATH/config
+    echo 0x9223318 > $DCC_PATH/config
 
-    echo 0x090C012C > $DCC_PATH/config
-    echo 0x090C8040 > $DCC_PATH/config
-   #End Link list #6
+   #End Link list #4
 }
 
 config_lagoon_dcc_cam()
@@ -279,7 +324,7 @@ config_lagoon_dcc_gemnoc()
     #GemNOC for lagoon start
     echo 0x9680000 3 > $DCC_PATH/config
     echo 8 > $DCC_PATH/loop
-    echo 0x9681000 > $DCC_PATH/config
+    echo 0x9681000 3 > $DCC_PATH/config
     echo 1 > $DCC_PATH/loop
     echo 0x09680078 > $DCC_PATH/config
     echo 0x9681008 12> $DCC_PATH/config
@@ -384,7 +429,6 @@ config_lagoon_dcc_osm()
     echo 0x18322c18 > $DCC_PATH/config
     echo 0x1832302c > $DCC_PATH/config
     echo 0x18323044 > $DCC_PATH/config
-    echo 0x18323700 > $DCC_PATH/config
     echo 0x18323710 > $DCC_PATH/config
     echo 0x1832376c > $DCC_PATH/config
     echo 0x18323818 > $DCC_PATH/config
@@ -394,7 +438,6 @@ config_lagoon_dcc_osm()
     echo 0x18324c18 > $DCC_PATH/config
     echo 0x1832582c > $DCC_PATH/config
     echo 0x18325844 > $DCC_PATH/config
-    echo 0x18325f00 > $DCC_PATH/config
     echo 0x18325f10 > $DCC_PATH/config
     echo 0x18325f6c > $DCC_PATH/config
     echo 0x18326018 > $DCC_PATH/config
@@ -403,6 +446,24 @@ config_lagoon_dcc_osm()
     echo 0x18326120 > $DCC_PATH/config
     echo 0x18327414 > $DCC_PATH/config
     echo 0x18327418 > $DCC_PATH/config
+    echo 0x1837103C > $DCC_PATH/config
+    echo 0x18371034 > $DCC_PATH/config
+    echo 0x18371810 > $DCC_PATH/config
+    echo 0x18371814 > $DCC_PATH/config
+    echo 0x18200040 > $DCC_PATH/config
+    echo 0x18371820 > $DCC_PATH/config
+    echo 0x18325F04 > $DCC_PATH/config
+    echo 0x18325F00 > $DCC_PATH/config
+    echo 0x18325F2C > $DCC_PATH/config
+    echo 0x1837903C > $DCC_PATH/config
+    echo 0x18379034 > $DCC_PATH/config
+    echo 0x18379810 > $DCC_PATH/config
+    echo 0x18379814 > $DCC_PATH/config
+    echo 0x1837981C > $DCC_PATH/config
+    echo 0x18379820 > $DCC_PATH/config
+    echo 0x18323700 > $DCC_PATH/config
+    echo 0x18323704 > $DCC_PATH/config
+    echo 0x1832372C > $DCC_PATH/config
 }
 
 config_lagoon_dcc_core()
@@ -424,7 +485,7 @@ config_lagoon_dcc_core()
     echo 0x18390810 1 > $DCC_PATH/config
     echo 0x18390814 1 > $DCC_PATH/config
     echo 0x18390818 1 > $DCC_PATH/config
-    echo 0x18393A84 2 > $DCC_PATH/config
+    echo 0x18393A84 1 > $DCC_PATH/config
     echo 0x18100908 1 > $DCC_PATH/config
     echo 0x18100C18 1 > $DCC_PATH/config
     echo 0x183A0810 1 > $DCC_PATH/config
@@ -696,6 +757,31 @@ config_lagoon_dcc_rsc_tcs()
     echo 0x182220c4 > $DCC_PATH/config
 
     #NPU RSC
+    echo 0x98B0010 > $DCC_PATH/config
+    echo 0x98B0014 > $DCC_PATH/config
+    echo 0x98B0018 > $DCC_PATH/config
+    echo 0x98B0210 > $DCC_PATH/config
+    echo 0x98B0230 > $DCC_PATH/config
+    echo 0x98B0250 > $DCC_PATH/config
+    echo 0x98B0270 > $DCC_PATH/config
+    echo 0x98B0290 > $DCC_PATH/config
+    echo 0x98B02B0 > $DCC_PATH/config
+    echo 0x98B0208 > $DCC_PATH/config
+    echo 0x98B0228 > $DCC_PATH/config
+    echo 0x98B0248 > $DCC_PATH/config
+    echo 0x98B0268 > $DCC_PATH/config
+    echo 0x98B0288 > $DCC_PATH/config
+    echo 0x98B02A8 > $DCC_PATH/config
+    echo 0x98B020C > $DCC_PATH/config
+    echo 0x98B022C > $DCC_PATH/config
+    echo 0x98B024C > $DCC_PATH/config
+    echo 0x98B026C > $DCC_PATH/config
+    echo 0x98B028C > $DCC_PATH/config
+    echo 0x98B02AC > $DCC_PATH/config
+    echo 0x98B0400 > $DCC_PATH/config
+    echo 0x98B0404 > $DCC_PATH/config
+    echo 0x98B0408 > $DCC_PATH/config
+    echo 0x9802028 > $DCC_PATH/config
 
     #CDSP RSCp
     echo 0x80A4010 > $DCC_PATH/config
@@ -759,9 +845,7 @@ config_lagoon_dcc_rsc_tcs()
 
     #CDSP PDC
     echo 0xb2b0010 > $DCC_PATH/config
-    # echo 0xb2b0014 > $DCC_PATH/config
     echo 0xb2b0900 > $DCC_PATH/config
-    # echo 0xb2b0904 > $DCC_PATH/config
     echo 0xb2b1020 > $DCC_PATH/config
     echo 0xb2b1024 > $DCC_PATH/config
     echo 0xb2b1030 > $DCC_PATH/config
@@ -801,10 +885,69 @@ config_lagoon_dcc_lpass_rsc(){
     echo 0x3002000 > $DCC_PATH/config
     echo 0x3002004 > $DCC_PATH/config
     echo 0x3090380 32 > $DCC_PATH/config
+    echo 0x62402028  > $DCC_PATH/config
 
     #WDOG
     echo 0x8384004 5 > $DCC_PATH/config
     echo 0x08300304 > $DCC_PATH/config
+
+    #RSCp
+    echo 0x62900010 > $DCC_PATH/config
+    echo 0x62900014 > $DCC_PATH/config
+    echo 0x62900018 > $DCC_PATH/config
+    echo 0x62900030 > $DCC_PATH/config
+    echo 0x62900038 > $DCC_PATH/config
+    echo 0x62900040 > $DCC_PATH/config
+    echo 0x62900048 > $DCC_PATH/config
+    echo 0x629000D0 > $DCC_PATH/config
+    echo 0x62900210 > $DCC_PATH/config
+    echo 0x62900230 > $DCC_PATH/config
+    echo 0x62900250 > $DCC_PATH/config
+    echo 0x62900270 > $DCC_PATH/config
+    echo 0x62900290 > $DCC_PATH/config
+    echo 0x629002B0 > $DCC_PATH/config
+    echo 0x62900208 > $DCC_PATH/config
+    echo 0x62900228 > $DCC_PATH/config
+    echo 0x62900248 > $DCC_PATH/config
+    echo 0x62900268 > $DCC_PATH/config
+    echo 0x62900288 > $DCC_PATH/config
+    echo 0x629002A8 > $DCC_PATH/config
+    echo 0x6290020C > $DCC_PATH/config
+    echo 0x6290022C > $DCC_PATH/config
+    echo 0x6290024C > $DCC_PATH/config
+    echo 0x6290026C > $DCC_PATH/config
+    echo 0x6290028C > $DCC_PATH/config
+    echo 0x629002AC > $DCC_PATH/config
+    echo 0x62900404 > $DCC_PATH/config
+    echo 0x62900408 > $DCC_PATH/config
+    echo 0x62900400 > $DCC_PATH/config
+    echo 0x62900D04 > $DCC_PATH/config
+
+    #RSCc
+    echo 0x624B0010 > $DCC_PATH/config
+    echo 0x624B0014 > $DCC_PATH/config
+    echo 0x624B0018 > $DCC_PATH/config
+    echo 0x624B0210 > $DCC_PATH/config
+    echo 0x624B0230 > $DCC_PATH/config
+    echo 0x624B0250 > $DCC_PATH/config
+    echo 0x624B0270 > $DCC_PATH/config
+    echo 0x624B0290 > $DCC_PATH/config
+    echo 0x624B02B0 > $DCC_PATH/config
+    echo 0x624B0208 > $DCC_PATH/config
+    echo 0x624B0228 > $DCC_PATH/config
+    echo 0x624B0248 > $DCC_PATH/config
+    echo 0x624B0268 > $DCC_PATH/config
+    echo 0x624B0288 > $DCC_PATH/config
+    echo 0x624B02A8 > $DCC_PATH/config
+    echo 0x624B020C > $DCC_PATH/config
+    echo 0x624B022C > $DCC_PATH/config
+    echo 0x624B024C > $DCC_PATH/config
+    echo 0x624B026C > $DCC_PATH/config
+    echo 0x624B028C > $DCC_PATH/config
+    echo 0x624B02AC > $DCC_PATH/config
+    echo 0x624B0400 > $DCC_PATH/config
+    echo 0x624B0404 > $DCC_PATH/config
+    echo 0x624B0408 > $DCC_PATH/config
 }
 
 config_lagoon_dcc_mss_rsc(){
@@ -881,6 +1024,8 @@ config_lagoon_dcc_mss_rsc(){
     echo 0xb2c4510 > $DCC_PATH/config
     echo 0xb2c4514 > $DCC_PATH/config
     echo 0xb2c4520 > $DCC_PATH/config
+    echo 0x18A008 > $DCC_PATH/config
+
 }
 
 config_lagoon_dcc_noc(){
@@ -888,6 +1033,7 @@ config_lagoon_dcc_noc(){
     echo 0x16e0000 > $DCC_PATH/config
     echo 0x16e0004 > $DCC_PATH/config
     echo 0x16e0300 > $DCC_PATH/config
+    echo 0x16E0400 > $DCC_PATH/config
     echo 0x16e0408 > $DCC_PATH/config
     echo 0x16e0410 > $DCC_PATH/config
     echo 0x16e0420 > $DCC_PATH/config
@@ -1091,6 +1237,9 @@ config_lagoon_dcc_noc(){
     echo 0x9698244 > $DCC_PATH/config
     echo 0x9698248 > $DCC_PATH/config
     echo 0x969824c > $DCC_PATH/config
+    echo 0x1B9064 > $DCC_PATH/config
+    echo 0x1B906C > $DCC_PATH/config
+
 }
 
 config_lagoon_dcc_gcc(){
@@ -1207,8 +1356,12 @@ config_lagoon_dcc_apps_rsc_pdc()
     echo 0x18200010 > $DCC_PATH/config
     echo 0x18200030 > $DCC_PATH/config
     echo 0x18200038 > $DCC_PATH/config
-    echo 0x18200040 > $DCC_PATH/config
     echo 0x18200048 > $DCC_PATH/config
+    echo 0x18220038 > $DCC_PATH/config
+    echo 0x18220040 > $DCC_PATH/config
+    echo 0x182200D0 > $DCC_PATH/config
+    echo 0x18220010 > $DCC_PATH/config
+    echo 0x18220030 > $DCC_PATH/config
     echo 0x18200400 > $DCC_PATH/config
     echo 0x18200404 > $DCC_PATH/config
     echo 0x18200408 > $DCC_PATH/config
@@ -1259,11 +1412,9 @@ enable_lagoon_dcc_config()
     config_lagoon_dcc_osm
     config_lagoon_dcc_gemnoc
     config_lagoon_dcc_noc
-    #config_lagoon_dcc_gpu
-    #config_lagoon_dcc_gcc
+
     config_lagoon_dcc_pimem
-    #config_lagoon_dcc_misc
-    #config_lagoon_dcc_gic
+
     config_lagoon_dcc_ddr
     config_lagoon_dcc_ddr
 
@@ -1274,9 +1425,13 @@ enable_lagoon_dcc_config()
     lagoon_dcc_async_package
     config_lagoon_dcc_rsc_tcs
     config_lagoon_dcc_lpass_rsc
-    #config_lagoon_dcc_mss_rsc
+    config_lagoon_dcc_mss_rsc
+    #config_lagoon_dcc_gpu
+    #config_lagoon_dcc_gcc
     #config_lagoon_dcc_l3_rsc
     #config_lagoon_dcc_gcc_other
+    #config_lagoon_dcc_misc
+    #config_lagoon_dcc_gic
 
     echo  1 > $DCC_PATH/enable
 }
