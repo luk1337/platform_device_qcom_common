@@ -3637,7 +3637,7 @@ case "$target" in
         for memlat in $device/*qcom,devfreq-l3/*cpu*-lat/devfreq/*cpu*-lat
             do
                 echo "mem_latency" > $memlat/governor
-                echo 10 > $memlat/polling_interval
+                echo 8 > $memlat/polling_interval
                 echo 400 > $memlat/mem_latency/ratio_ceil
             done
 
@@ -3651,7 +3651,7 @@ case "$target" in
         for memlat in $device/*cpu*-lat/devfreq/*cpu*-lat
         do
             echo "mem_latency" > $memlat/governor
-            echo 10 > $memlat/polling_interval
+            echo 8 > $memlat/polling_interval
             echo 400 > $memlat/mem_latency/ratio_ceil
             done
 
@@ -3671,7 +3671,7 @@ case "$target" in
             for latfloor in $device/*cpu*-ddr-latfloor*/devfreq/*cpu-ddr-latfloor*
             do
                 echo "compute" > $latfloor/governor
-                echo 10 > $latfloor/polling_interval
+                echo 8 > $latfloor/polling_interval
             done
         done
 
@@ -3689,7 +3689,7 @@ case "$target" in
 
     #Apply settings for lagoon
     case "$soc_id" in
-        "434" )
+        "434" | "459" )
 
         # Core control parameters on silver
         echo 0 0 0 0 1 1 > /sys/devices/system/cpu/cpu0/core_ctl/not_preferred
@@ -3784,12 +3784,12 @@ case "$target" in
                 echo 1600 > $llccbw/bw_hwmon/idle_mbps
             done
 
-            for npubw in $device/*npu*-npu-ddr-bw/devfreq/*npu*-npu-ddr-bw
+            for npubw in $device/*npu*-ddr-bw/devfreq/*npu*-ddr-bw
             do
                 echo 1 > /sys/devices/virtual/npu/msm_npu/pwr
                 echo "bw_hwmon" > $npubw/governor
                 echo 40 > $npubw/polling_interval
-                echo "1144 1720 2086 2929 3879 5931 6881 8137" > $npubw/bw_hwmon/mbps_zones
+                echo "1144 1720 2086 2929 3879 5931 6881 7980" > $npubw/bw_hwmon/mbps_zones
                 echo 4 > $npubw/bw_hwmon/sample_ms
                 echo 80 > $npubw/bw_hwmon/io_percent
                 echo 20 > $npubw/bw_hwmon/hist_memory
@@ -3801,8 +3801,24 @@ case "$target" in
                 echo 0 > /sys/devices/virtual/npu/msm_npu/pwr
             done
 
-            #Enable mem_latency governor for L3, LLCC, and DDR scaling
-            for memlat in $device/*cpu*-lat/devfreq/*cpu*-lat
+            for npullccbw in $device/*npu*-llcc-bw/devfreq/*npu*-llcc-bw
+            do
+                echo 1 > /sys/devices/virtual/npu/msm_npu/pwr
+                echo "bw_hwmon" > $npullccbw/governor
+                echo 40 > $npullccbw/polling_interval
+                echo "2288 4577 7110 9155 12298 14236 16265" > $npullccbw/bw_hwmon/mbps_zones
+                echo 4 > $npullccbw/bw_hwmon/sample_ms
+                echo 100 > $npullccbw/bw_hwmon/io_percent
+                echo 20 > $npullccbw/bw_hwmon/hist_memory
+                echo 10 > $npullccbw/bw_hwmon/hyst_length
+                echo 30 > $npullccbw/bw_hwmon/down_thres
+                echo 0 > $npullccbw/bw_hwmon/guard_band_mbps
+                echo 250 > $npullccbw/bw_hwmon/up_scale
+                echo 0 > /sys/devices/virtual/npu/msm_npu/pwr
+            done
+
+           #Enable mem_latency governor for L3, LLCC, and DDR scaling
+            for memlat in $device/*qcom,devfreq-l3/*cpu*-lat/devfreq/*cpu*-lat
             do
                 echo "mem_latency" > $memlat/governor
                 echo 10 > $memlat/polling_interval
@@ -3810,13 +3826,21 @@ case "$target" in
             done
 
             #Enable cdspl3 governor for L3 cdsp nodes
-            for l3cdsp in $device/*cdsp-cdsp-l3-lat/devfreq/*cdsp-cdsp-l3-lat
+            for l3cdsp in $device/*qcom,devfreq-l3/*cdsp-l3-lat/devfreq/*cdsp-l3-lat
             do
-                echo "cdspl3" > $l3cdsp/governor
+                echo "powersave" > $l3cdsp/governor
+            done
+
+            for cpu7l3 in $device/*qcom,devfreq-l3/*cpu7-cpu-l3-lat/devfreq/*cpu7-cpu-l3-lat
+            do
+                echo "powersave" > $memlat/governor
             done
 
             #Gold L3 ratio ceil
-            echo 4000 > /sys/class/devfreq/soc:qcom,cpu6-cpu-l3-lat/mem_latency/ratio_ceil
+            for l3gold in $device/*qcom,devfreq-l3/*cpu6-cpu-l3-lat/devfreq/*cpu6-cpu-l3-lat
+            do
+                echo 4000 > $l3gold/mem_latency/ratio_ceil
+            done
 
             #Enable compute governor for gold latfloor
             for latfloor in $device/*cpu*-ddr-latfloor*/devfreq/*cpu-ddr-latfloor*
@@ -4974,7 +4998,7 @@ case "$target" in
         "MTP" | "Surf" | "RCM" )
             # Start Host based Touch processing
             case "$platform_subtype_id" in
-                "0" | "1" | "2" | "3" | "4")
+                "0" | "1" | "2" | "3" | "4" | "5")
                     start_hbtp
                     ;;
             esac
