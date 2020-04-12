@@ -345,7 +345,7 @@ case "$target" in
                     setprop vendor.media.target.version 1
                 fi
                 ;;
-            434)
+            434|459)
                 sku_ver=`cat /sys/devices/platform/soc/aa00000.qcom,vidc1/sku_version` 2> /dev/null
                 setprop vendor.media.target.version 2
                 if [ $sku_ver -eq 1 ]; then
@@ -356,11 +356,21 @@ case "$target" in
         ;;
     "bengal")
         case "$soc_hwplatform" in
+            441)
+                setprop vendor.media.target.version 2
+                ;;
             *)
                 sku_ver=`cat /sys/devices/platform/soc/5a00000.qcom,vidc/sku_version` 2> /dev/null
                 if [ $sku_ver -eq 1 ]; then
                     setprop vendor.media.target.version 1
                 fi
+                ;;
+        esac
+        ;;
+    "bengal")
+        case "$soc_hwid" in
+            441)
+                setprop vendor.gralloc.disable_ubwc 1
                 ;;
         esac
         ;;
@@ -478,7 +488,11 @@ then
                 esac
         done
     fi
-else
+fi
+
+
+drm_driver=/sys/class/drm/card0
+if [ -e "$drm_driver" ]; then
     set_perms /sys/devices/virtual/hdcp/msm_hdcp/min_level_change system.graphics 0660
 fi
 
